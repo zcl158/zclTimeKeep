@@ -146,11 +146,14 @@ namespace zclTimeKeep
                 string s = File.ReadAllText(path);
                 DateTime t = Convert.ToDateTime(s);
 
-                SystemTime st = new SystemTime();
-                st.FromDateTime(t);
-                //调用Win32 API设置系统时间
-                SetLocalTime(ref st);
-                
+                DateTime t1 = DateTime.Now;
+                if (DateTime.Compare(t, t1) > 0)
+                {
+                    SystemTime st = new SystemTime();
+                    st.FromDateTime(t);
+                    //调用Win32 API设置系统时间
+                    SetLocalTime(ref st);
+                }               
             }
         }
 
